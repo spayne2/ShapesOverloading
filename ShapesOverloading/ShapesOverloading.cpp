@@ -227,6 +227,10 @@ public:
     }
 };
 
+class Circle : public Shape {
+
+};
+
 int main()
 {
     IsocTriangle it(6);
