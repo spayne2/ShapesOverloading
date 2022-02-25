@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <math.h>
 using namespace std;
 
 class Shape
@@ -49,7 +50,7 @@ public:
     //overloaded describe that recieves and ostream variable, so it can be called from operator<<
     void describe(ostream& os)
     {
-        cout << "this is a square the sides are " << width << " long" << endl;
+        cout << "A Square: the sides are " << width << " long." << " Border Shape: "<< shapeBorder << endl;
     }
     //plain desribe function, that call the describe with the ostream
     void describe()
@@ -84,7 +85,7 @@ public:
     {
         draw(cout);
     }
-   
+
     Square operator+(Square s2)
     {
         Square newSquare(this->width + s2.width);
@@ -98,6 +99,7 @@ public:
         }
         return false;
     }
+    
 };
 
 class Rectangle :public Square {
@@ -109,7 +111,7 @@ public:
     Rectangle(int width, int height, char shapeBorder) :Square(width, shapeBorder) { this->height = height; }
     void describe(ostream& os)
     {
-        cout << "this is a rectangle the sides are " << width << " wide and " << height << " high"<< endl;
+        cout << "A Rectangle: the sides are " << width << " wide and " << height << " high." << " Border Shape: " << shapeBorder << endl;
     }
     //plain desribe function, that call the describe with the ostream
     void describe()
@@ -144,6 +146,7 @@ public:
     {
         draw(cout);
     }
+
     Rectangle operator+(Rectangle r2)
     {
         Rectangle newRectangle(this->width + r2.width, this->height+r2.height);
@@ -168,12 +171,13 @@ private:
         width = (height * 2) - 1;        
     }
 public:
+    //different versions of constructor
     IsocTriangle() :Shape() { height = 0; setWidth(); };
     IsocTriangle(int height) :Shape()
     {
         this->height = height;
         setWidth();
-    }
+    }//if the user wants one with a different char then do this
     IsocTriangle(int height, char shapeBorder)
     {
         this->height = height;
@@ -183,7 +187,7 @@ public:
     //describe that recieves and ostream variable, so it can be called from operator<<
     void describe(ostream& os)
     {
-        cout << "this is a isosceles triangle the its height is "<< height <<" and its base is " << width << " wide "<< endl;
+        cout << "A Isosceles Triangle: the its height is "<< height <<" and its base is " << width << " wide." << " Border Shape: " << shapeBorder << endl;
     }
     //plain desribe function, that call the describe with the ostream
     void describe()
@@ -199,7 +203,7 @@ public:
                 cout << " ";
             }
             for (int star = 0; star <= i * 2; star++) {
-                cout << "*";
+                cout << shapeBorder;
             }
             space--;
             cout << endl;
@@ -228,47 +232,113 @@ public:
 };
 
 class Circle : public Shape {
+public:
+    Circle() {};
+    Circle(int width) :Shape(width) {};
+    Circle(int width, char shapeBorder) :Shape(width, shapeBorder) {};
+    //overloaded describe that recieves and ostream variable, so it can be called from operator<<
+    void describe(ostream& os)
+    {
+        cout << "A Circle: its diameter is " << width << "." << " Border Shape: " << shapeBorder << endl;
+    }
+    //plain desribe function, that calls the describe with the ostream
+    void describe()
+    {
+        describe(cout);
+    }
+    //overloaded draw funcion that has ostream passed in so it can be called from operator<<
+    void draw(ostream& os)
+    {
+        int radius = width / 2;//get radius from width
+        
+        for (int x = -radius; x <= radius; x++)
+        {
+            for (int y = -radius; y <= radius; y++)
+            {
+                int eq = x * x + y * y - radius * radius; //x squared + y squared = r squared is graph equation for a circle
+                if (abs(eq) <= radius) //abs() returns the absolute value of a number i.e the number without a sign // if the numebr falls inside the sqrt of theradius then print shape, else print "  "
+                {
+                    cout << shapeBorder<<" ";
+                }
+                else
+                {
+                    cout << "  ";
+                }
+            }
+            cout << endl;
+        }
+    }
+    //plain draw function that calls the draw function with ostream
+    void draw()
+    {
+        draw(cout);
+    }
 
+    //+ operator adds to circle together
+    Circle operator+(Circle c2)
+    {
+        Circle newCircle(this->width + c2.width);
+        return newCircle;
+    }
+    //== checked for euqality.
+    bool operator==(Circle c2)
+    {
+        if (this->width == c2.width)
+        {
+            return true;
+        }
+        return false;
+    }
 };
-
-int main()
+void printShapes(vector<Shape*> shapes)
 {
-    IsocTriangle it(6);
-    cout << &it;
-    //Implement these classes
-    //Rectangle r(5,10,'*');
-    //IsocTriangle it(10,20,'*');
-    //Circle c(10,'*');
-   vector<Shape*> shapes;
-    Square s1(5, '*');
-    Square s2(10, '*');
-    Square s3 = s1 + s2;
-    Rectangle r1(10, 5, '#');
-    Rectangle r2(8, 14, '#');
-    //add more shapes to the vector.
-    shapes.push_back(&r2);
-    shapes.push_back(&s1);
-    shapes.push_back(&s3);
-    shapes.push_back(&r1);
-
     for (int i = 0; i < shapes.size(); i++)
     {
+        cout << (i + 1)<< " ";
         shapes[i]->describe();
-        shapes[i]->draw();
     }
-    //test out your overloaded operators
-    cout << &s2;
-    cout << &r2;
+}
+int main()
+{    
+    //Implement these classes
+    Rectangle r(5,10,'#');
+    Rectangle r2(50, 10, '#');
+    IsocTriangle it(10,'~');
+    IsocTriangle it2(15, '0');
+    Circle c(18,'&');
+    Circle c2(20, '&');
+    Square s(12, '*');
+    Square s2(5, '*');
+    Circle c3 = c + c2;
+     //test out your overloaded operators
+     //you could create a menu and the the user to input shapes and border chars
+    vector<Shape*> shapes;
+    shapes.push_back(&r);
+    shapes.push_back(&it);
+    shapes.push_back(&c);
+    shapes.push_back(&s);
+    shapes.push_back(&r2);
+    shapes.push_back(&it2);
+    shapes.push_back(&c2);
+    shapes.push_back(&s2);
+    shapes.push_back(&c3);
+    
+    while (true)
+    {
+        cout << "Welcome to the shape program " << endl;
+        cout << "These shapes are available: " << endl << endl;
+        printShapes(shapes);
+        cout << endl;
+        cout << "What shape would you like to display? " << endl;
 
-    if (s1 == s2)
-    {
-        cout << &s1 << &s2;
-        cout << "These two shapes are the same " << endl;
-    }
-    else
-    {
-        cout << &s1 << &s2;
-        cout << "These two shapes are NOT the same " << endl;
-    }
+        int usrInput;
+        cin >> usrInput;
+        if(usrInput>shapes.size()||usrInput<=0)
+        {
+            break;
+        }
+        system("cls");
+        cout << shapes[usrInput - 1];
+    }    
 }
 
