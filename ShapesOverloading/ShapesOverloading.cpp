@@ -106,9 +106,12 @@ class Rectangle :public Square {
 private:
     int height;
 public:
-    Rectangle() { height = 0; };
+    Rectangle() :Square() { height = 0; };
     Rectangle(int width, int height) :Square(width) { this->height = height; }
-    Rectangle(int width, int height, char shapeBorder) :Square(width, shapeBorder) { this->height = height; }
+    Rectangle(int width, int height, char shapeBorder) :Square(width, shapeBorder) 
+    { 
+        this->height = height; 
+    }
     void describe(ostream& os)
     {
         cout << "A Rectangle: the sides are " << width << " wide and " << height << " high." << " Border Shape: " << shapeBorder << endl;
@@ -309,6 +312,7 @@ int main()
     Circle c2(20, '&');
     Square s(12, '*');
     Square s2(5, '*');
+    Square s3(14, '@');
     Circle c3 = c + c2;
      //test out your overloaded operators
      //you could create a menu and the the user to input shapes and border chars
@@ -322,6 +326,7 @@ int main()
     shapes.push_back(&c2);
     shapes.push_back(&s2);
     shapes.push_back(&c3);
+    shapes.push_back(&s3);
     
     while (true)
     {
