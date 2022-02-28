@@ -50,7 +50,7 @@ public:
     //overloaded describe that recieves and ostream variable, so it can be called from operator<<
     void describe(ostream& os)
     {
-        cout << "A Square: the sides are " << width << " long." << " Border Shape: "<< shapeBorder << endl;
+        os << "A Square: the sides are " << width << " long." << " Border Shape: "<< shapeBorder << endl;
     }
     //plain desribe function, that call the describe with the ostream
     void describe()
@@ -114,7 +114,7 @@ public:
     }
     void describe(ostream& os)
     {
-        cout << "A Rectangle: the sides are " << width << " wide and " << height << " high." << " Border Shape: " << shapeBorder << endl;
+        os << "A Rectangle: the sides are " << width << " wide and " << height << " high." << " Border Shape: " << shapeBorder << endl;
     }
     //plain desribe function, that call the describe with the ostream
     void describe()
@@ -190,7 +190,7 @@ public:
     //describe that recieves and ostream variable, so it can be called from operator<<
     void describe(ostream& os)
     {
-        cout << "A Isosceles Triangle: the its height is "<< height <<" and its base is " << width << " wide." << " Border Shape: " << shapeBorder << endl;
+        os << "A Isosceles Triangle: the its height is "<< height <<" and its base is " << width << " wide." << " Border Shape: " << shapeBorder << endl;
     }
     //plain desribe function, that call the describe with the ostream
     void describe()
@@ -242,7 +242,7 @@ public:
     //overloaded describe that recieves and ostream variable, so it can be called from operator<<
     void describe(ostream& os)
     {
-        cout << "A Circle: its diameter is " << width << "." << " Border Shape: " << shapeBorder << endl;
+        os << "A Circle: its diameter is " << width << "." << " Border Shape: " << shapeBorder << endl;
     }
     //plain desribe function, that calls the describe with the ostream
     void describe()
@@ -306,7 +306,7 @@ int main()
     //Implement these classes
     Rectangle r(5,10,'#');
     Rectangle r2(50, 10, '#');
-    IsocTriangle it(10,'~');
+    IsocTriangle it(10,'@');
     IsocTriangle it2(15, '0');
     Circle c(18,'&');
     Circle c2(20, '&');
@@ -314,6 +314,10 @@ int main()
     Square s2(5, '*');
     Square s3(14, '@');
     Circle c3 = c + c2;
+
+    cout << &r;
+    cout << &it;
+    cout << &s2;
      //test out your overloaded operators
      //you could create a menu and the the user to input shapes and border chars
     vector<Shape*> shapes;
